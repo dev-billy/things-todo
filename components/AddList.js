@@ -4,7 +4,7 @@ import {Button, Overlay} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AddListForm from './AddListForm';
 
-export default () => {
+export default ({addTodoList}) => {
   const [visible, setVisible] = useState(false);
   return (
     <View>
@@ -16,7 +16,10 @@ export default () => {
         icon={<Icon name="add" style={styles.iconStyles} />}
       />
       <Overlay isVisible={visible} overlayStyle={styles.modalStyle}>
-        <AddListForm close={() => setVisible(false)} />
+        <AddListForm
+          close={() => setVisible(false)}
+          addTodoList={addTodoList}
+        />
       </Overlay>
     </View>
   );

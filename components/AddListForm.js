@@ -4,7 +4,9 @@ import {Button, Input} from 'react-native-elements';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import TodoItem from './TodoItem';
 
-export default ({close}) => {
+export default ({close, addTodoList}) => {
+  const [todoTitle, setTodoTitle] = useState('');
+  const [todoTitleErr, setTodoTitleErr] = useState('');
   const [todoItems, setTodoItems] = useState([]);
   const [todoItemErr, setTodoItemErr] = useState('');
   const [todoText, setTodoText] = useState('');
@@ -13,6 +15,29 @@ export default ({close}) => {
     setTodoText(text);
     setTodoItemErr('');
   };
+
+  const onTodoTitleTextChange = text => {
+    setTodoTitle(text);
+    setTodoTitleErr('');
+  };
+
+  const saveTodoList = () => {
+    if (todoTitle.trim() === '') {
+      setTodoTitleErr('Todo list title is required');
+    } else {
+      let todoList = {
+        id: Math.random(),
+        title: todoTitle,
+        totalTasks: todoItems.length,
+        completedTasks: 0,
+        lastUpdatedOn: '2020-05-01',
+        todos: [...todoItems],
+      };
+      addTodoList(todoList);
+      close();
+    }
+  };
+
   const addTodo = () => {
     if (todoText.trim() === '') {
       setTodoItemErr('Todo text is required');
@@ -41,6 +66,9 @@ export default ({close}) => {
           label="List Name"
           labelStyle={styles.inputLabel}
           style={styles.input}
+          value={todoTitle}
+          onChangeText={onTodoTitleTextChange}
+          errorMessage={todoTitleErr}
         />
       </View>
       <View>
@@ -77,7 +105,11 @@ export default ({close}) => {
           titleStyle={styles.buttonCancel}
           onPress={() => close()}
         />
-        <Button buttonStyle={styles.buttonSave} title="Save" />
+        <Button
+          buttonStyle={styles.buttonSave}
+          title="Save"
+          onPress={saveTodoList}
+        />
       </View>
     </View>
   );
