@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 
 import {Header, TodoListItem} from '../components';
 import AddList from '../components/AddList';
-const Home = () => {
+const Home = ({navigation}) => {
   const [todoLists, setTodoLists] = useState([]);
   const addTodoList = todoList => {
     setTodoLists([...todoLists, todoList]);
@@ -13,7 +13,14 @@ const Home = () => {
       <Header />
       <FlatList
         data={todoLists}
-        renderItem={listItem => <TodoListItem listItem={listItem.item} />}
+        renderItem={listItem => (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('List Details', {listItem: listItem.item})
+            }>
+            <TodoListItem listItem={listItem.item} />
+          </TouchableOpacity>
+        )}
       />
       <View style={styles.addBtn}>
         <AddList addTodoList={addTodoList} />
