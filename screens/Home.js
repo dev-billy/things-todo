@@ -1,18 +1,16 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import {Header} from '../components';
 const Home = () => {
   return (
     <View style={styles.container}>
-      <Text>Things Todo</Text>
-      <Text>Coming Soon!</Text>
+      <Header />
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 export default Home;
