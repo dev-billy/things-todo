@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {Button, Overlay} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import AddListForm from './AddListForm';
 
 export default () => {
   const [visible, setVisible] = useState(false);
@@ -17,9 +18,8 @@ export default () => {
       <Overlay
         height={100}
         isVisible={visible}
-        overlayStyle={styles.modalStyle}
-        onBackdropPress={() => setVisible(false)}>
-        <Text>Add List Form here!</Text>
+        overlayStyle={styles.modalStyle}>
+        <AddListForm close={() => setVisible(false)} />
       </Overlay>
     </View>
   );
@@ -37,9 +37,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   modalStyle: {
-    height: '80%',
+    height: '95%',
     width: '90%',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
