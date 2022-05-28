@@ -3,7 +3,6 @@ import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default ({listItem}) => {
-  console.log(listItem);
   return (
     <View style={styles.container}>
       <View>

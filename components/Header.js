@@ -10,6 +10,7 @@ const HeaderComponent = ({title, iconName, showIcon}) => {
         <Title title={title} iconName={iconName} showIcon={showIcon} />
       }
       barStyle="light-content"
+      statusBarProps={{backgroundColor: '#2B2D42'}}
       containerStyle={styles.headerContainerStyle}
     />
   );
