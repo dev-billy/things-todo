@@ -1,3 +1,3 @@
 import Header from './Header';
-
-export {Header};
+import TodoListItem from './TodoListItem';
+export {Header, TodoListItem};
