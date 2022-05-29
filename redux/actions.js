@@ -21,3 +21,13 @@ export const addTodoListAction = todoList => {
     payload: todoList,
   };
 };
+
+export const addTodoItemToList = (listId, todoItem) => {
+  return {
+    type: ADD_TODO_ITEM,
+    payload: {
+      listId,
+      todoItem,
+    },
+  };
+};

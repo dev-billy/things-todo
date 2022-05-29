@@ -1,14 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {View, StyleSheet, FlatList} from 'react-native';
 import {Header} from '../components';
 import AddItem from '../components/AddItem';
 import TodoItem from '../components/TodoItem';
+import {addTodoItemToList} from '../redux/actions';
 
 export const ListDetails = ({route}) => {
-  const {listItem} = route.params;
-  const [todoItems, setTodoItems] = useState(listItem.todos);
+  const {listId} = route.params;
+  const listItem = useSelector(state =>
+    state.todoListsReducer.todoLists.find(item => item.id === listId),
+  );
+  const dispatch = useDispatch();
+
   const addTodoItem = todoItem => {
-    setTodoItems(currentItems => [...currentItems, todoItem]);
+    dispatch(addTodoItemToList(listId, todoItem));
   };
   return (
     <View style={styles.container}>
@@ -16,7 +22,7 @@ export const ListDetails = ({route}) => {
       <View style={styles.content}>
         <AddItem addTodoItem={addTodoItem} />
         <FlatList
-          data={todoItems}
+          data={listItem.todos}
           style={styles.itemList}
           renderItem={item => <TodoItem item={item.item} />}
         />

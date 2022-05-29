@@ -1,4 +1,4 @@
-import {ADD_TODO_LIST, GET_TODO_LISTS} from './actions';
+import {ADD_TODO_LIST, ADD_TODO_ITEM, GET_TODO_LISTS} from './actions';
 
 const initialState = {
   todoLists: [],
@@ -14,6 +14,19 @@ const todoListsReducer = (state = initialState, action) => {
       return {
         ...state,
         todoLists: [...state.todoLists, action.payload],
+      };
+    case ADD_TODO_ITEM:
+      return {
+        ...state,
+        todoLists: state.todoLists.map(list => {
+          if (list.id === action.payload.listId) {
+            return {
+              ...list,
+              todos: [...list.todos, action.payload.todoItem],
+            };
+          }
+          return list;
+        }),
       };
     default:
       return state;

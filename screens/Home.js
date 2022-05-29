@@ -18,7 +18,7 @@ const Home = ({navigation}) => {
         renderItem={listItem => (
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('List Details', {listItem: listItem.item})
+              navigation.navigate('List Details', {listId: listItem.item.id})
             }>
             <TodoListItem listItem={listItem.item} />
           </TouchableOpacity>
