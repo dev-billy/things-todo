@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {View, StyleSheet, FlatList, Alert} from 'react-native';
+import {View, StyleSheet, FlatList, Alert, Text} from 'react-native';
 import {Header} from '../components';
 import AddItem from '../components/AddItem';
 import TodoItem from '../components/TodoItem';
@@ -16,6 +16,8 @@ export const ListDetails = ({route, navigation}) => {
   const listItem = useSelector(state =>
     state.todoListsReducer.todoLists.find(item => item.id === listId),
   );
+  const completedTasks = listItem.todos.filter(item => item.completed).length;
+  const totalTasks = listItem.todos.length;
   const dispatch = useDispatch();
 
   const addTodoItem = todoItem => {
@@ -67,6 +69,9 @@ export const ListDetails = ({route, navigation}) => {
       />
       <View style={styles.content}>
         <AddItem addTodoItem={addTodoItem} />
+        <Text style={styles.status}>
+          Completed: {completedTasks}/{totalTasks}
+        </Text>
         <FlatList
           data={listItem.todos}
           style={styles.itemList}
@@ -95,5 +100,9 @@ const styles = StyleSheet.create({
   },
   itemList: {
     marginTop: 20,
+  },
+  status: {
+    marginTop: 20,
+    alignSelf: 'flex-end',
   },
 });
