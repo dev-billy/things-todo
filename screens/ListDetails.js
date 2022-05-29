@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {View, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList, Alert} from 'react-native';
 import {Header} from '../components';
 import AddItem from '../components/AddItem';
 import TodoItem from '../components/TodoItem';
@@ -8,9 +8,10 @@ import {
   addTodoItemToList,
   updateTodoItem,
   deleteTodoItem,
+  deleteList,
 } from '../redux/actions';
 
-export const ListDetails = ({route}) => {
+export const ListDetails = ({route, navigation}) => {
   const {listId} = route.params;
   const listItem = useSelector(state =>
     state.todoListsReducer.todoLists.find(item => item.id === listId),
@@ -28,9 +29,42 @@ export const ListDetails = ({route}) => {
   const handleDelete = todoItemId => {
     dispatch(deleteTodoItem(listId, todoItemId));
   };
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
+
+  const handleDeleteList = id => {
+    dispatch(deleteList(id));
+  };
+
+  const endMenu = () => {
+    Alert.alert(
+      'Delete List',
+      '\nAre you sure you want to delete this list? \n\n This action cannot be undone',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            handleGoBack();
+            handleDeleteList(listId);
+          },
+        },
+      ],
+    );
+  };
   return (
     <View style={styles.container}>
-      <Header title={listItem.title} showIcon={false} />
+      <Header
+        title={listItem.title}
+        showIcon={false}
+        goBack={handleGoBack}
+        endMenu={endMenu}
+      />
       <View style={styles.content}>
         <AddItem addTodoItem={addTodoItem} />
         <FlatList

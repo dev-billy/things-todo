@@ -4,6 +4,7 @@ import {
   GET_TODO_LISTS,
   UPDATE_TODO_ITEM,
   DELETE_TODO_ITEM,
+  DELETE_TODO_LIST,
 } from './actions';
 
 const initialState = {
@@ -69,6 +70,11 @@ const todoListsReducer = (state = initialState, action) => {
           }
           return list;
         }),
+      };
+    case DELETE_TODO_LIST:
+      return {
+        ...state,
+        todoLists: state.todoLists.filter(list => list.id !== action.payload),
       };
     default:
       return state;

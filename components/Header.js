@@ -3,7 +3,7 @@ import {Text, View, StyleSheet} from 'react-native';
 import {Header} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const HeaderComponent = ({title, iconName, showIcon}) => {
+const HeaderComponent = ({title, iconName, showIcon, goBack, endMenu}) => {
   return (
     <Header
       centerComponent={
@@ -12,6 +12,16 @@ const HeaderComponent = ({title, iconName, showIcon}) => {
       barStyle="light-content"
       statusBarProps={{backgroundColor: '#2B2D42'}}
       containerStyle={styles.headerContainerStyle}
+      leftComponent={
+        goBack !== undefined ? (
+          <Icon name="chevron-left" size={25} color="#fff" onPress={goBack} />
+        ) : null
+      }
+      rightComponent={
+        endMenu !== undefined ? (
+          <Icon name="delete" size={25} color="#fff" onPress={endMenu} />
+        ) : null
+      }
     />
   );
 };

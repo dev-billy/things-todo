@@ -53,3 +53,10 @@ export const deleteTodoItem = (listId, todoItemId) => {
     },
   };
 };
+
+export const deleteList = listId => {
+  return {
+    type: DELETE_TODO_LIST,
+    payload: listId,
+  };
+};
