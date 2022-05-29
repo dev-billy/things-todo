@@ -3,12 +3,14 @@ import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default ({listItem}) => {
+  const totalTasks = listItem.todos.length;
+  const completedTasks = listItem.todos.filter(todo => todo.completed).length;
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.title}>{listItem.title}</Text>
         <Text style={styles.status}>
-          Completed: {listItem.completedTasks}/{listItem.totalTasks}
+          Completed: {completedTasks}/{totalTasks}
         </Text>
         <Text style={styles.status}>
           last updated: {listItem.lastUpdatedOn}

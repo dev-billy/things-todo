@@ -23,8 +23,6 @@ export default ({close, addTodoList}) => {
       let todoList = {
         id: uuid4(),
         title: todoTitle,
-        totalTasks: todoItems.length,
-        completedTasks: 0,
         lastUpdatedOn: '2020-05-01',
         todos: [...todoItems],
       };
