@@ -21,7 +21,7 @@ export default ({close, addTodoList}) => {
       setTodoTitleErr('Todo list title is required');
     } else {
       let todoList = {
-        id: uuid4(),
+        id: Math.random(),
         title: todoTitle,
         lastUpdatedOn: '2020-05-01',
         todos: [...todoItems],

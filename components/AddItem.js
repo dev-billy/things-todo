@@ -16,7 +16,7 @@ export default ({addTodoItem}) => {
       setTodoItemErr('Todo text is required');
       return;
     }
-    addTodoItem({id: uuid4(), text: todoText, completed: false});
+    addTodoItem({id: Math.random(), text: todoText, completed: false});
     //clears the current text
     setTodoText('');
   };
