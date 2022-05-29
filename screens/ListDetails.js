@@ -1,17 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import {Header} from '../components';
+import AddItem from '../components/AddItem';
 import TodoItem from '../components/TodoItem';
 
 export const ListDetails = ({route}) => {
   const {listItem} = route.params;
+  const [todoItems, setTodoItems] = useState([]);
+  const addTodoItem = todoItem => {
+    setTodoItems(currentItems => [...currentItems, todoItem]);
+  };
   return (
     <View style={styles.container}>
       <Header title={listItem.title} showIcon={false} />
-      <FlatList
-        data={listItem.todos}
-        renderItem={item => <TodoItem item={item.item} />}
-      />
+      <View style={styles.content}>
+        <AddItem addTodoItem={addTodoItem} />
+        <FlatList
+          data={listItem.todos}
+          style={styles.itemList}
+          renderItem={item => <TodoItem item={item.item} />}
+        />
+      </View>
     </View>
   );
 };
@@ -20,7 +29,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#EDF2F4',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  content: {
+    marginTop: 30,
+    paddingHorizontal: 18,
+  },
+  itemList: {
+    marginTop: 20,
   },
 });
