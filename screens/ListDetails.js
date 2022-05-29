@@ -6,7 +6,7 @@ import TodoItem from '../components/TodoItem';
 
 export const ListDetails = ({route}) => {
   const {listItem} = route.params;
-  const [todoItems, setTodoItems] = useState([]);
+  const [todoItems, setTodoItems] = useState(listItem.todos);
   const addTodoItem = todoItem => {
     setTodoItems(currentItems => [...currentItems, todoItem]);
   };
@@ -16,7 +16,7 @@ export const ListDetails = ({route}) => {
       <View style={styles.content}>
         <AddItem addTodoItem={addTodoItem} />
         <FlatList
-          data={listItem.todos}
+          data={todoItems}
           style={styles.itemList}
           renderItem={item => <TodoItem item={item.item} />}
         />
