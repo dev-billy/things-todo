@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Input} from 'react-native-elements';
+import uuid4 from 'uuid4';
 
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import TodoItem from './TodoItem';
@@ -20,7 +21,7 @@ export default ({close, addTodoList}) => {
       setTodoTitleErr('Todo list title is required');
     } else {
       let todoList = {
-        id: Math.random(),
+        id: uuid4(),
         title: todoTitle,
         totalTasks: todoItems.length,
         completedTasks: 0,
