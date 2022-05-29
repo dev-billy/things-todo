@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-
+import {addTodoListAction} from '../redux/actions';
 import {Header, TodoListItem} from '../components';
 import AddList from '../components/AddList';
 const Home = ({navigation}) => {
-  const [todoLists, setTodoLists] = useState([]);
+  const {todoLists} = useSelector(state => state.todoListsReducer);
+  const dispatch = useDispatch();
   const addTodoList = todoList => {
-    setTodoLists([...todoLists, todoList]);
+    dispatch(addTodoListAction(todoList));
   };
   return (
     <View style={styles.container}>

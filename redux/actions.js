@@ -14,3 +14,10 @@ export const getTodoLists = () => {
     });
   };
 };
+
+export const addTodoListAction = todoList => {
+  return {
+    type: ADD_TODO_LIST,
+    payload: todoList,
+  };
+};
