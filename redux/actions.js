@@ -43,3 +43,13 @@ export const updateTodoItem = (listId, todoItemId, todoItem) => {
     },
   };
 };
+
+export const deleteTodoItem = (listId, todoItemId) => {
+  return {
+    type: DELETE_TODO_ITEM,
+    payload: {
+      listId,
+      todoItemId,
+    },
+  };
+};

@@ -4,7 +4,11 @@ import {View, StyleSheet, FlatList} from 'react-native';
 import {Header} from '../components';
 import AddItem from '../components/AddItem';
 import TodoItem from '../components/TodoItem';
-import {addTodoItemToList, updateTodoItem} from '../redux/actions';
+import {
+  addTodoItemToList,
+  updateTodoItem,
+  deleteTodoItem,
+} from '../redux/actions';
 
 export const ListDetails = ({route}) => {
   const {listId} = route.params;
@@ -20,6 +24,10 @@ export const ListDetails = ({route}) => {
   const handleComplete = todoItem => {
     dispatch(updateTodoItem(listId, todoItem.id, todoItem));
   };
+
+  const handleDelete = todoItemId => {
+    dispatch(deleteTodoItem(listId, todoItemId));
+  };
   return (
     <View style={styles.container}>
       <Header title={listItem.title} showIcon={false} />
@@ -33,6 +41,7 @@ export const ListDetails = ({route}) => {
               item={item.item}
               showCheck
               handleComplete={handleComplete}
+              handleDelete={handleDelete}
             />
           )}
         />

@@ -3,6 +3,7 @@ import {
   ADD_TODO_ITEM,
   GET_TODO_LISTS,
   UPDATE_TODO_ITEM,
+  DELETE_TODO_ITEM,
 } from './actions';
 
 const initialState = {
@@ -49,6 +50,21 @@ const todoListsReducer = (state = initialState, action) => {
                 }
                 return item;
               }),
+            };
+          }
+          return list;
+        }),
+      };
+    case DELETE_TODO_ITEM:
+      return {
+        ...state,
+        todoLists: state.todoLists.map(list => {
+          if (list.id === action.payload.listId) {
+            return {
+              ...list,
+              todos: list.todos.filter(
+                item => item.id !== action.payload.todoItemId,
+              ),
             };
           }
           return list;
