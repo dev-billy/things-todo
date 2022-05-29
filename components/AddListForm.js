@@ -3,18 +3,12 @@ import {Button, Input} from 'react-native-elements';
 
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import TodoItem from './TodoItem';
+import AddItem from './AddItem';
 
 export default ({close, addTodoList}) => {
   const [todoTitle, setTodoTitle] = useState('');
   const [todoTitleErr, setTodoTitleErr] = useState('');
   const [todoItems, setTodoItems] = useState([]);
-  const [todoItemErr, setTodoItemErr] = useState('');
-  const [todoText, setTodoText] = useState('');
-
-  const onTextChange = text => {
-    setTodoText(text);
-    setTodoItemErr('');
-  };
 
   const onTodoTitleTextChange = text => {
     setTodoTitle(text);
@@ -38,17 +32,8 @@ export default ({close, addTodoList}) => {
     }
   };
 
-  const addTodo = () => {
-    if (todoText.trim() === '') {
-      setTodoItemErr('Todo text is required');
-      return;
-    }
-    setTodoItems(currentItems => [
-      {id: currentItems.length + 1, text: todoText},
-      ...currentItems,
-    ]);
-    //clears the current text
-    setTodoText('');
+  const addTodoItem = todoItem => {
+    setTodoItems(currentItems => [...currentItems, todoItem]);
   };
 
   const removeItem = id => {
@@ -73,23 +58,7 @@ export default ({close, addTodoList}) => {
       </View>
       <View>
         <Text style={styles.todoItemsText}>Todo Items</Text>
-        <View style={styles.todoItemsInputGrp}>
-          <Input
-            placeholder="Add Item..."
-            label="Add Item"
-            labelStyle={styles.inputLabel}
-            style={styles.input}
-            value={todoText}
-            errorMessage={todoItemErr}
-            onChangeText={onTextChange}
-            onSubmitEditing={addTodo}
-          />
-          <Button
-            buttonStyle={styles.buttonAddTodo}
-            onPress={addTodo}
-            title="Add item"
-          />
-        </View>
+        <AddItem addTodoItem={addTodoItem} />
       </View>
       <FlatList
         data={todoItems}
@@ -144,11 +113,6 @@ const styles = StyleSheet.create({
   },
   todoItems: {
     marginTop: 20,
-  },
-  buttonAddTodo: {
-    flexShrink: 0.3,
-    alignSelf: 'flex-end',
-    backgroundColor: '#EE6C4D',
   },
   buttonGroup: {
     flexDirection: 'row',
