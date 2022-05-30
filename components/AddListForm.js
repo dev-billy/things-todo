@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Input} from 'react-native-elements';
-import uuid4 from 'uuid4';
+import uuid from 'react-native-uuid';
 
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import TodoItem from './TodoItem';
@@ -21,7 +21,7 @@ export default ({close, addTodoList}) => {
       setTodoTitleErr('Todo list title is required');
     } else {
       let todoList = {
-        id: Math.random(),
+        id: uuid.v4(),
         title: todoTitle,
         lastUpdatedOn: '2020-05-01',
         todos: [...todoItems],

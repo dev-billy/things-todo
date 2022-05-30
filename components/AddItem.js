@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Input, Button} from 'react-native-elements';
-import uuid4 from 'uuid4';
+import uuid from 'react-native-uuid';
 export default ({addTodoItem}) => {
   const [todoItemErr, setTodoItemErr] = useState('');
   const [todoText, setTodoText] = useState('');
@@ -16,7 +16,7 @@ export default ({addTodoItem}) => {
       setTodoItemErr('Todo text is required');
       return;
     }
-    addTodoItem({id: Math.random(), text: todoText, completed: false});
+    addTodoItem({id: uuid.v4(), text: todoText, completed: false});
     //clears the current text
     setTodoText('');
   };
