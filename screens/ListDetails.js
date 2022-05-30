@@ -4,12 +4,12 @@ import {View, StyleSheet, FlatList, Alert, Text} from 'react-native';
 import {Header} from '../components';
 import AddItem from '../components/AddItem';
 import TodoItem from '../components/TodoItem';
+import {deleteList} from '../redux/actions';
 import {
-  addTodoItemToList,
-  updateTodoItem,
+  postTodoItem,
+  patchTodoItem,
   deleteTodoItem,
-  deleteList,
-} from '../redux/actions';
+} from '../utils/api_methods';
 
 export const ListDetails = ({route, navigation}) => {
   const {listId} = route.params;
@@ -21,15 +21,18 @@ export const ListDetails = ({route, navigation}) => {
   const dispatch = useDispatch();
 
   const addTodoItem = todoItem => {
-    dispatch(addTodoItemToList(listId, todoItem));
+    //dispatch(addTodoItemToList(listId, todoItem));
+    postTodoItem(listId, todoItem);
   };
 
   const handleComplete = todoItem => {
-    dispatch(updateTodoItem(listId, todoItem.id, todoItem));
+    //dispatch(updateTodoItem(listId, todoItem.id, todoItem));
+    patchTodoItem(todoItem.id, todoItem);
   };
 
   const handleDelete = todoItemId => {
-    dispatch(deleteTodoItem(listId, todoItemId));
+    // dispatch(deleteTodoItem(listId, todoItemId));
+    deleteTodoItem(todoItemId);
   };
   const handleGoBack = () => {
     navigation.goBack();

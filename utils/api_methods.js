@@ -91,3 +91,22 @@ export const postTodoItems = (todoListId, todoItems) => {
     });
   }
 };
+
+export const patchTodoItem = (todoItemId, todoItem) => {
+  const options = {
+    method: 'PATCH',
+    url: `${TODO_ITEMS_URL}/${todoItemId}`,
+    data: {
+      ...todoItem,
+    },
+  };
+  return Axios.request(options);
+};
+
+export const deleteTodoItem = todoItemId => {
+  const options = {
+    method: 'DELETE',
+    url: `${TODO_ITEMS_URL}/${todoItemId}`,
+  };
+  return Axios.request(options);
+};
