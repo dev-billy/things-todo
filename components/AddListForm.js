@@ -4,6 +4,7 @@ import {Button, Input} from 'react-native-elements';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import TodoItem from './TodoItem';
 import AddItem from './AddItem';
+import {getUniqueId} from '../utils/uniqueId';
 
 export default ({close, addTodoList}) => {
   const [todoTitle, setTodoTitle] = useState('');
@@ -19,8 +20,7 @@ export default ({close, addTodoList}) => {
     if (todoTitle.trim() === '') {
       setTodoTitleErr('Todo list title is required');
     } else {
-      const now = new Date();
-      let todoListId = Math.floor(now.valueOf() + Math.random()) % 1000;
+      let todoListId = getUniqueId();
       let todoList = {
         id: todoListId,
         name: todoTitle,

@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Input, Button} from 'react-native-elements';
+import {getUniqueId} from '../utils/uniqueId';
 
 export default ({addTodoItem}) => {
   const [todoItemErr, setTodoItemErr] = useState('');
   const [todoText, setTodoText] = useState('');
 
-  const now = new Date();
-  let todoId = Math.floor(now.valueOf() + Math.random()) % 1000;
   const onTextChange = text => {
     setTodoText(text);
     setTodoItemErr('');
@@ -18,7 +17,7 @@ export default ({addTodoItem}) => {
       setTodoItemErr('Todo text is required');
       return;
     }
-    addTodoItem({id: todoId, description: todoText, is_done: false});
+    addTodoItem({id: getUniqueId(), description: todoText, is_done: false});
     //clears the current text
     setTodoText('');
   };
