@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import {TODO_LISTS_URL} from '../config';
+import {TODO_ITEMS_URL, TODO_LISTS_URL} from '../config';
 
 //action types
 export const GET_TODO_LISTS = 'GET_TODO_LISTS';
@@ -72,6 +72,31 @@ const buildTodoList = async () => {
   }
 };
 
+const postTodoList = todoList => {
+  const options = {
+    method: 'POST',
+    url: TODO_LISTS_URL,
+    data: todoList,
+  };
+  return Axios.request(options);
+};
+
+const postTodoItems = (todoListId, todoItems) => {
+  if (todoItems.length > 0) {
+    todoItems.forEach(item => {
+      const options = {
+        method: 'POST',
+        url: TODO_ITEMS_URL,
+        data: {
+          todo_list_id: todoListId,
+          ...item,
+        },
+      };
+      Axios.request(options);
+    });
+  }
+};
+
 export const getTodoLists = () => {
   return async dispatch => {
     const todoLists = await buildTodoList();
@@ -82,7 +107,12 @@ export const getTodoLists = () => {
   };
 };
 
-export const addTodoListAction = todoList => {
+export const addTodoListAction = (id, todoList, items) => {
+  postTodoList(todoList).then(res => {
+    if (res.status === 200) {
+      postTodoItems(id, items);
+    }
+  });
   return {
     type: ADD_TODO_LIST,
     payload: todoList,

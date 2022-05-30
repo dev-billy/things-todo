@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Button, Input} from 'react-native-elements';
-import uuid from 'react-native-uuid';
 
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import TodoItem from './TodoItem';
@@ -20,13 +19,13 @@ export default ({close, addTodoList}) => {
     if (todoTitle.trim() === '') {
       setTodoTitleErr('Todo list title is required');
     } else {
+      const now = new Date();
+      let todoListId = Math.floor(now.valueOf() + Math.random()) % 1000;
       let todoList = {
-        id: uuid.v4(),
-        title: todoTitle,
-        lastUpdatedOn: '2020-05-01',
-        todos: [...todoItems],
+        id: todoListId,
+        name: todoTitle,
       };
-      addTodoList(todoList);
+      addTodoList(todoListId, todoList, todoItems);
       close();
     }
   };

@@ -7,8 +7,8 @@ import AddList from '../components/AddList';
 const Home = ({navigation}) => {
   const {todoLists} = useSelector(state => state.todoListsReducer);
   const dispatch = useDispatch();
-  const addTodoList = todoList => {
-    dispatch(addTodoListAction(todoList));
+  const addTodoList = (id, todoList, items) => {
+    dispatch(addTodoListAction(id, todoList, items));
   };
 
   useEffect(() => {
