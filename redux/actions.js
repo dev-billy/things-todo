@@ -11,30 +11,30 @@ export const DELETE_TODO_ITEM = 'DELETE_TODO_ITEM';
 export const TOGGLE_TODO_ITEM = 'TOGGLE_TODO_ITEM';
 
 const fetchTodoListFromApi = async () => {
-  const response = await Axios.get(TODO_LISTS_URL)
-    .then(res => res.data)
-    .catch(error => {
-      console.log(error);
-    });
+  let response;
+  try {
+    response = await Axios.get(TODO_LISTS_URL);
+  } catch (err) {
+    console.log(err);
+  }
   if (response) {
     return response.data;
   } else {
     console.log('Could not fetch todo lists from API');
-    return [];
   }
 };
 
 const fetchTodoListWithTodos = async todoListId => {
-  const response = await Axios.get(`${TODO_LISTS_URL}/${todoListId}`)
-    .then(res => res.data)
-    .catch(error => {
-      console.log(error);
-    });
+  let response;
+  try {
+    response = await Axios.get(`${TODO_LISTS_URL}/${todoListId}`);
+  } catch (err) {
+    console.log(err);
+  }
   if (response) {
     return response.data;
   } else {
     console.log('Could not fetch todo list with todos from API');
-    return [];
   }
 };
 
@@ -54,8 +54,8 @@ const fetchTodoListWithTodos = async todoListId => {
 const buildTodoList = async () => {
   let todoLists = [];
   const todoListFromApi = await fetchTodoListFromApi();
-  let length = todoListFromApi.length;
-  if (length > 0) {
+  if (todoListFromApi) {
+    let length = todoListFromApi.length;
     for (let i = 0; i < length; i++) {
       const todoList = await fetchTodoListWithTodos(todoListFromApi[i].id);
       todoLists = [
@@ -70,7 +70,6 @@ const buildTodoList = async () => {
     }
     return todoLists;
   }
-  return [];
 };
 
 export const getTodoLists = () => {

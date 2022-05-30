@@ -14,10 +14,14 @@ const initialState = {
 const todoListsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_TODO_LISTS:
-      return {
-        ...state,
-        todoLists: action.payload,
-      };
+      if (action.payload) {
+        return {
+          ...state,
+          todoLists: action.payload,
+        };
+      } else {
+        return {...state};
+      }
     case ADD_TODO_LIST:
       return {
         ...state,
