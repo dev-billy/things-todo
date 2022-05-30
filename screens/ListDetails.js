@@ -1,14 +1,14 @@
 import React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {View, StyleSheet, FlatList, Alert, Text} from 'react-native';
 import {Header} from '../components';
 import AddItem from '../components/AddItem';
 import TodoItem from '../components/TodoItem';
-import {deleteList} from '../redux/actions';
 import {
   postTodoItem,
   patchTodoItem,
   deleteTodoItem,
+  deleteTodoList,
 } from '../utils/api_methods';
 
 export const ListDetails = ({route, navigation}) => {
@@ -18,7 +18,7 @@ export const ListDetails = ({route, navigation}) => {
   );
   const completedTasks = listItem.todos.filter(item => item.completed).length;
   const totalTasks = listItem.todos.length;
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const addTodoItem = todoItem => {
     //dispatch(addTodoItemToList(listId, todoItem));
@@ -39,7 +39,8 @@ export const ListDetails = ({route, navigation}) => {
   };
 
   const handleDeleteList = id => {
-    dispatch(deleteList(id));
+    //dispatch(deleteList(id));
+    deleteTodoList(id);
   };
 
   const endMenu = () => {

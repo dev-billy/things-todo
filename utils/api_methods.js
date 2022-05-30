@@ -110,3 +110,11 @@ export const deleteTodoItem = todoItemId => {
   };
   return Axios.request(options);
 };
+
+export const deleteTodoList = todoListId => {
+  const options = {
+    method: 'DELETE',
+    url: `${TODO_LISTS_URL}/${todoListId}`,
+  };
+  return Axios.request(options);
+};
