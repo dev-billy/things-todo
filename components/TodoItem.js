@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {CheckBox} from 'react-native-elements';
 
 export default ({item, handleDelete, showCheck, handleComplete}) => {
-  const checked = item.completed;
+  const checked = item.is_done;
   const checkedStyles = {
     text: {
       textDecorationLine: checked ? 'line-through' : 'none',
@@ -20,13 +20,13 @@ export default ({item, handleDelete, showCheck, handleComplete}) => {
               checkedIcon="check-box"
               uncheckedIcon="check-box-outline-blank"
               checked={checked}
-              onPress={() => handleComplete({...item, completed: !checked})}
+              onPress={() => handleComplete({...item, is_done: !checked})}
               size={18}
             />
           </View>
         ) : null}
         <Text style={{...styles.title, ...checkedStyles.text}}>
-          {item.text}
+          {item.description}
         </Text>
       </View>
       <TouchableOpacity onPress={() => handleDelete(item.id)}>
