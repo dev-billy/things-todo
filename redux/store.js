@@ -1,4 +1,5 @@
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {todoListsReducer} from './reducers';
@@ -13,5 +14,5 @@ const rootReducer = combineReducers({
   todoListsReducer: persistReducer(persistConfig, todoListsReducer),
 });
 
-export const store = createStore(rootReducer);
+export const store = createStore(rootReducer, applyMiddleware(thunk));
 export const persistor = persistStore(store);

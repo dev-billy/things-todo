@@ -16,6 +16,7 @@ const todoListsReducer = (state = initialState, action) => {
     case GET_TODO_LISTS:
       return {
         ...state,
+        todoLists: action.payload,
       };
     case ADD_TODO_LIST:
       return {

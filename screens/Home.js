@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import {addTodoListAction} from '../redux/actions';
+import {addTodoListAction, getTodoLists} from '../redux/actions';
 import {Header, TodoListItem} from '../components';
 import AddList from '../components/AddList';
 const Home = ({navigation}) => {
@@ -10,6 +10,11 @@ const Home = ({navigation}) => {
   const addTodoList = todoList => {
     dispatch(addTodoListAction(todoList));
   };
+
+  useEffect(() => {
+    dispatch(getTodoLists());
+  }, [dispatch]);
+
   return (
     <View style={styles.container}>
       <Header />
