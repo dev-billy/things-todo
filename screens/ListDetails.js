@@ -1,9 +1,15 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {View, StyleSheet, FlatList, Alert, Text} from 'react-native';
 import {Header} from '../components';
 import AddItem from '../components/AddItem';
 import TodoItem from '../components/TodoItem';
+import {
+  addTodoItemToList,
+  updateTodoItem,
+  deleteList,
+  deleteTodoItemAction,
+} from '../redux/actions';
 import {
   postTodoItem,
   patchTodoItem,
@@ -18,20 +24,20 @@ export const ListDetails = ({route, navigation}) => {
   );
   const completedTasks = listItem.todos.filter(item => item.completed).length;
   const totalTasks = listItem.todos.length;
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const addTodoItem = todoItem => {
-    //dispatch(addTodoItemToList(listId, todoItem));
+    dispatch(addTodoItemToList(listId, todoItem));
     postTodoItem(listId, todoItem);
   };
 
   const handleComplete = todoItem => {
-    //dispatch(updateTodoItem(listId, todoItem.id, todoItem));
+    dispatch(updateTodoItem(listId, todoItem.id, todoItem));
     patchTodoItem(todoItem.id, todoItem);
   };
 
   const handleDelete = todoItemId => {
-    // dispatch(deleteTodoItem(listId, todoItemId));
+    dispatch(deleteTodoItemAction(listId, todoItemId));
     deleteTodoItem(todoItemId);
   };
   const handleGoBack = () => {
@@ -39,7 +45,7 @@ export const ListDetails = ({route, navigation}) => {
   };
 
   const handleDeleteList = id => {
-    //dispatch(deleteList(id));
+    dispatch(deleteList(id));
     deleteTodoList(id);
   };
 

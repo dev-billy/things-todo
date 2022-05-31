@@ -26,7 +26,7 @@ const todoListsReducer = (state = initialState, action) => {
       //paused this implementation revisit when working with online-offline data
       return {
         ...state,
-        todoLists: [...state.todoLists],
+        todoLists: [...state.todoLists, action.payload],
       };
     case ADD_TODO_ITEM:
       return {

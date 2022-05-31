@@ -20,14 +20,37 @@ export const getTodoLists = () => {
 };
 
 export const addTodoListAction = (id, todoList, items) => {
-  postTodoList(todoList).then(res => {
-    if (res.status === 200) {
-      postTodoItems(id, items);
-    }
-  });
-  return {
-    type: ADD_TODO_LIST,
-    payload: todoList,
+  return async dispatch => {
+    postTodoList(todoList)
+      .then(res => {
+        if (res.status === 200) {
+          postTodoItems(id, items);
+          return res.data;
+        }
+      })
+      .then(data => {
+        dispatch({
+          type: ADD_TODO_LIST,
+          payload: {
+            id: todoList.id,
+            title: todoList.name,
+            todos: items,
+            lastUpdatedOn: data.updated_at,
+          },
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({
+          type: ADD_TODO_LIST,
+          payload: {
+            id: todoList.id,
+            title: todoList.name,
+            todos: items,
+            lastUpdatedOn: 'OFFLINE',
+          },
+        });
+      });
   };
 };
 
@@ -52,7 +75,7 @@ export const updateTodoItem = (listId, todoItemId, todoItem) => {
   };
 };
 
-export const deleteTodoItem = (listId, todoItemId) => {
+export const deleteTodoItemAction = (listId, todoItemId) => {
   return {
     type: DELETE_TODO_ITEM,
     payload: {
