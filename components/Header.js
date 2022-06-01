@@ -3,26 +3,40 @@ import {Text, View, StyleSheet} from 'react-native';
 import {Header} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const HeaderComponent = ({title, iconName, showIcon, goBack, endMenu}) => {
+const HeaderComponent = ({
+  title,
+  iconName,
+  showIcon,
+  goBack,
+  endMenu,
+  isConnected,
+}) => {
   return (
-    <Header
-      centerComponent={
-        <Title title={title} iconName={iconName} showIcon={showIcon} />
-      }
-      barStyle="light-content"
-      statusBarProps={{backgroundColor: '#2B2D42'}}
-      containerStyle={styles.headerContainerStyle}
-      leftComponent={
-        goBack !== undefined ? (
-          <Icon name="chevron-left" size={25} color="#fff" onPress={goBack} />
-        ) : null
-      }
-      rightComponent={
-        endMenu !== undefined ? (
-          <Icon name="delete" size={25} color="#fff" onPress={endMenu} />
-        ) : null
-      }
-    />
+    <>
+      <Header
+        centerComponent={
+          <Title title={title} iconName={iconName} showIcon={showIcon} />
+        }
+        barStyle="light-content"
+        statusBarProps={{backgroundColor: '#2B2D42'}}
+        containerStyle={styles.headerContainerStyle}
+        leftComponent={
+          goBack !== undefined ? (
+            <Icon name="chevron-left" size={25} color="#fff" onPress={goBack} />
+          ) : null
+        }
+        rightComponent={
+          endMenu !== undefined ? (
+            <Icon name="delete" size={25} color="#fff" onPress={endMenu} />
+          ) : null
+        }
+      />
+      {isConnected ? null : (
+        <View style={styles.offlineStatusBar}>
+          <Text style={styles.statusBarText}>Oops, Lost Connection</Text>
+        </View>
+      )}
+    </>
   );
 };
 
@@ -57,6 +71,15 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 19,
     fontWeight: 'bold',
+  },
+  statusBarText: {
+    color: '#1e1e1e',
+    fontSize: 13,
+    textAlign: 'center',
+  },
+  offlineStatusBar: {
+    paddingVertical: 5,
+    backgroundColor: 'rgba(239, 35, 60, 0.65)',
   },
 });
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {View, StyleSheet, FlatList, TouchableOpacity, Text} from 'react-native';
+import {View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {
   addTodoListAction,
   runUpdateAndGetData,
@@ -46,14 +46,16 @@ const Home = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Header />
-      {isConnected ? <Text>CONNECTED</Text> : <Text>OFFLINE</Text>}
+      <Header isConnected={isConnected} />
       <FlatList
         data={todoLists}
         renderItem={listItem => (
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('List Details', {listId: listItem.item.id})
+              navigation.navigate('List Details', {
+                listId: listItem.item.id,
+                isConnected: isConnected,
+              })
             }>
             <TodoListItem listItem={listItem.item} />
           </TouchableOpacity>

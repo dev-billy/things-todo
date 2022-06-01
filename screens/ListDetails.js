@@ -12,7 +12,7 @@ import {
 } from '../redux/actions';
 
 export const ListDetails = ({route, navigation}) => {
-  const {listId} = route.params;
+  const {listId, isConnected} = route.params;
   const listItem = useSelector(state =>
     state.todoListsReducer.todoLists.find(item => item.id === listId),
   );
@@ -66,6 +66,7 @@ export const ListDetails = ({route, navigation}) => {
         showIcon={false}
         goBack={handleGoBack}
         endMenu={endMenu}
+        isConnected={isConnected}
       />
       <View style={styles.content}>
         <AddItem addTodoItem={addTodoItem} />
