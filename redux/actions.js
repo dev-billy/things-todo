@@ -33,8 +33,8 @@ export const addTodoListAction = (id, todoList, items) => {
       .then(res => {
         if (res.status === 200 && items.length > 0) {
           postTodoItems(id, items);
-          return res.data;
         }
+        return res.data;
       })
       .then(data => {
         dispatch({
