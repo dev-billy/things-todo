@@ -31,7 +31,7 @@ export const addTodoListAction = (id, todoList, items) => {
   return async dispatch => {
     postTodoList(todoList)
       .then(res => {
-        if (res.status === 200) {
+        if (res.status === 200 && items.length > 0) {
           postTodoItems(id, items);
           return res.data;
         }
@@ -55,7 +55,7 @@ export const addTodoListAction = (id, todoList, items) => {
             payload: {
               id: todoList.id,
               title: todoList.name,
-              todos: [...markItemsAsOffline(items)],
+              todos: [...markItemsAsOffline(items, todoList.id)],
               status: 'OFFLINE',
             },
           });
@@ -64,8 +64,8 @@ export const addTodoListAction = (id, todoList, items) => {
   };
 };
 
-const markItemsAsOffline = items =>
-  items.map(item => ({...item, status: 'OFFLINE'}));
+const markItemsAsOffline = (items, list_id) =>
+  items.map(item => ({...item, status: 'OFFLINE', list_id: list_id}));
 
 export const addTodoItemToList = (listId, todoItem) => {
   return async dispatch => {
@@ -91,6 +91,7 @@ export const addTodoItemToList = (listId, todoItem) => {
               todoItem: {
                 ...todoItem,
                 status: 'OFFLINE',
+                list_id: listId,
               },
             },
           });
@@ -187,5 +188,42 @@ export const deleteList = listId => {
           });
         }
       });
+  };
+};
+
+export const runUpdatesOnOfflineData = (offlineTodoLists, todoItems) => {
+  return async dispatch => {
+    if (offlineTodoLists.length > 0) {
+      for (let i = 0; i < offlineTodoLists.length; i++) {
+        let todoListToBeSaved = {
+          id: offlineTodoLists[i].id,
+          name: offlineTodoLists[i].title,
+        };
+        await dispatch(
+          addTodoListAction(offlineTodoLists[i].id, todoListToBeSaved, []),
+        );
+      }
+    }
+    if (todoItems.length > 0) {
+      for (let i = 0; i < todoItems.length; i++) {
+        let todoItemToBeSaved = {
+          id: todoItems[i].id,
+          description: todoItems[i].description,
+          is_done: todoItems[i].is_done,
+        };
+        let listId = todoItems[i].list_id;
+        await dispatch(addTodoItemToList(listId, todoItemToBeSaved));
+      }
+    }
+  };
+};
+
+export const runUpdateAndGetData = (todoLists, todoItems) => {
+  return async dispatch => {
+    if (todoLists.length > 0 || todoItems.length > 0) {
+      await dispatch(runUpdatesOnOfflineData(todoLists, todoItems));
+      await dispatch(getTodoLists());
+    }
+    await dispatch(getTodoLists());
   };
 };
