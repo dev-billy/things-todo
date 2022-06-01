@@ -55,15 +55,17 @@ export const addTodoListAction = (id, todoList, items) => {
             payload: {
               id: todoList.id,
               title: todoList.name,
-              todos: items,
+              todos: [...markItemsAsOffline(items)],
               status: 'OFFLINE',
-              actionType: ADD_TODO_LIST,
             },
           });
         }
       });
   };
 };
+
+const markItemsAsOffline = items =>
+  items.map(item => ({...item, status: 'OFFLINE'}));
 
 export const addTodoItemToList = (listId, todoItem) => {
   return async dispatch => {
@@ -86,9 +88,10 @@ export const addTodoItemToList = (listId, todoItem) => {
             type: ADD_TODO_ITEM,
             payload: {
               listId,
-              todoItem: todoItem,
-              status: 'OFFLINE',
-              actionType: ADD_TODO_ITEM,
+              todoItem: {
+                ...todoItem,
+                status: 'OFFLINE',
+              },
             },
           });
         }
@@ -119,9 +122,11 @@ export const updateTodoItem = (listId, todoItemId, todoItem) => {
             payload: {
               listId,
               todoItemId,
-              todoItem: todoItem,
-              status: 'OFFLINE',
-              actionType: UPDATE_TODO_ITEM,
+              todoItem: {
+                ...todoItem,
+                status: 'OFFLINE',
+                actionType: UPDATE_TODO_ITEM,
+              },
             },
           });
         }
