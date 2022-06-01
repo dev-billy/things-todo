@@ -1,4 +1,12 @@
-import {buildTodoList, postTodoItems, postTodoList} from '../utils/api_methods';
+import {
+  buildTodoList,
+  postTodoItems,
+  postTodoList,
+  postTodoItem,
+  patchTodoItem,
+  deleteTodoItem,
+  deleteTodoList,
+} from '../utils/api_methods';
 
 //action types
 export const GET_TODO_LISTS = 'GET_TODO_LISTS';
@@ -41,53 +49,138 @@ export const addTodoListAction = (id, todoList, items) => {
       })
       .catch(err => {
         console.log(err);
-        dispatch({
-          type: ADD_TODO_LIST,
-          payload: {
-            id: todoList.id,
-            title: todoList.name,
-            todos: items,
-            lastUpdatedOn: 'OFFLINE',
-          },
-        });
+        if (err.message === 'Network Error') {
+          dispatch({
+            type: ADD_TODO_LIST,
+            payload: {
+              id: todoList.id,
+              title: todoList.name,
+              todos: items,
+              status: 'OFFLINE',
+              actionType: ADD_TODO_LIST,
+            },
+          });
+        }
       });
   };
 };
 
 export const addTodoItemToList = (listId, todoItem) => {
-  return {
-    type: ADD_TODO_ITEM,
-    payload: {
-      listId,
-      todoItem,
-    },
+  return async dispatch => {
+    postTodoItem(listId, todoItem)
+      .then(res => {
+        if (res.status === 200) {
+          dispatch({
+            type: ADD_TODO_ITEM,
+            payload: {
+              listId,
+              todoItem: res.data,
+            },
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.message === 'Network Error') {
+          dispatch({
+            type: ADD_TODO_ITEM,
+            payload: {
+              listId,
+              todoItem: todoItem,
+              status: 'OFFLINE',
+              actionType: ADD_TODO_ITEM,
+            },
+          });
+        }
+      });
   };
 };
 
 export const updateTodoItem = (listId, todoItemId, todoItem) => {
-  return {
-    type: UPDATE_TODO_ITEM,
-    payload: {
-      listId,
-      todoItemId,
-      todoItem,
-    },
+  return async dispatch => {
+    patchTodoItem(todoItem.id, todoItem)
+      .then(res => {
+        if (res.status === 200) {
+          dispatch({
+            type: UPDATE_TODO_ITEM,
+            payload: {
+              listId,
+              todoItemId,
+              todoItem: res.data,
+            },
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.message === 'Network Error') {
+          dispatch({
+            type: UPDATE_TODO_ITEM,
+            payload: {
+              listId,
+              todoItemId,
+              todoItem: todoItem,
+              status: 'OFFLINE',
+              actionType: UPDATE_TODO_ITEM,
+            },
+          });
+        }
+      });
   };
 };
 
 export const deleteTodoItemAction = (listId, todoItemId) => {
-  return {
-    type: DELETE_TODO_ITEM,
-    payload: {
-      listId,
-      todoItemId,
-    },
+  return async dispatch => {
+    deleteTodoItem(todoItemId)
+      .then(res => {
+        if (res.status === 200) {
+          dispatch({
+            type: DELETE_TODO_ITEM,
+            payload: {
+              listId,
+              todoItemId,
+            },
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.message === 'Network Error') {
+          dispatch({
+            type: DELETE_TODO_ITEM,
+            payload: {
+              listId,
+              todoItemId,
+              status: 'OFFLINE',
+              actionType: DELETE_TODO_ITEM,
+            },
+          });
+        }
+      });
   };
 };
 
 export const deleteList = listId => {
-  return {
-    type: DELETE_TODO_LIST,
-    payload: listId,
+  return async dispatch => {
+    deleteTodoList(listId)
+      .then(res => {
+        if (res.status === 200) {
+          dispatch({
+            type: DELETE_TODO_LIST,
+            payload: listId,
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.message === 'Network Error') {
+          dispatch({
+            type: DELETE_TODO_LIST,
+            payload: listId,
+            status: 'OFFLINE',
+            actionType: DELETE_TODO_LIST,
+          });
+        }
+      });
   };
 };

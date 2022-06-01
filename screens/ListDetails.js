@@ -10,12 +10,6 @@ import {
   deleteList,
   deleteTodoItemAction,
 } from '../redux/actions';
-import {
-  postTodoItem,
-  patchTodoItem,
-  deleteTodoItem,
-  deleteTodoList,
-} from '../utils/api_methods';
 
 export const ListDetails = ({route, navigation}) => {
   const {listId} = route.params;
@@ -28,17 +22,14 @@ export const ListDetails = ({route, navigation}) => {
 
   const addTodoItem = todoItem => {
     dispatch(addTodoItemToList(listId, todoItem));
-    postTodoItem(listId, todoItem);
   };
 
   const handleComplete = todoItem => {
     dispatch(updateTodoItem(listId, todoItem.id, todoItem));
-    patchTodoItem(todoItem.id, todoItem);
   };
 
   const handleDelete = todoItemId => {
     dispatch(deleteTodoItemAction(listId, todoItemId));
-    deleteTodoItem(todoItemId);
   };
   const handleGoBack = () => {
     navigation.goBack();
@@ -46,7 +37,6 @@ export const ListDetails = ({route, navigation}) => {
 
   const handleDeleteList = id => {
     dispatch(deleteList(id));
-    deleteTodoList(id);
   };
 
   const endMenu = () => {
