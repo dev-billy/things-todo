@@ -49,6 +49,7 @@ const Home = ({navigation}) => {
       <Header isConnected={isConnected} />
       <FlatList
         data={todoLists}
+        style={styles.list}
         renderItem={listItem => (
           <TouchableOpacity
             onPress={() =>
@@ -77,6 +78,9 @@ const styles = StyleSheet.create({
     top: '95%',
     left: '90%',
     transform: [{translateX: -50}, {translateY: -50}],
+  },
+  list: {
+    marginBottom: 50,
   },
 });
 export default Home;

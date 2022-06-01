@@ -35,7 +35,7 @@ export default ({
           {item.description}
         </Text>
       </View>
-      {!isConnected ? null : (
+      {isConnected !== undefined && !isConnected ? null : (
         <TouchableOpacity onPress={() => handleDelete(item.id)}>
           <Icon style={styles.iconStyle} name="delete-outline" size={20} />
         </TouchableOpacity>
