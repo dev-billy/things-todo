@@ -82,6 +82,7 @@ export const ListDetails = ({route, navigation}) => {
               showCheck
               handleComplete={handleComplete}
               handleDelete={handleDelete}
+              isConnected={isConnected}
             />
           )}
         />

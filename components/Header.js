@@ -26,7 +26,7 @@ const HeaderComponent = ({
           ) : null
         }
         rightComponent={
-          endMenu !== undefined ? (
+          endMenu !== undefined && isConnected ? (
             <Icon name="delete" size={25} color="#fff" onPress={endMenu} />
           ) : null
         }

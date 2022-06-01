@@ -3,7 +3,13 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {CheckBox} from 'react-native-elements';
 
-export default ({item, handleDelete, showCheck, handleComplete}) => {
+export default ({
+  item,
+  handleDelete,
+  showCheck,
+  handleComplete,
+  isConnected,
+}) => {
   const checked = item.is_done;
   const checkedStyles = {
     text: {
@@ -29,9 +35,11 @@ export default ({item, handleDelete, showCheck, handleComplete}) => {
           {item.description}
         </Text>
       </View>
-      <TouchableOpacity onPress={() => handleDelete(item.id)}>
-        <Icon style={styles.iconStyle} name="delete-outline" size={20} />
-      </TouchableOpacity>
+      {!isConnected ? null : (
+        <TouchableOpacity onPress={() => handleDelete(item.id)}>
+          <Icon style={styles.iconStyle} name="delete-outline" size={20} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
