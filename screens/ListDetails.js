@@ -16,7 +16,7 @@ export const ListDetails = ({route, navigation}) => {
   const listItem = useSelector(state =>
     state.todoListsReducer.todoLists.find(item => item.id === listId),
   );
-  const completedTasks = listItem.todos.filter(item => item.completed).length;
+  const completedTasks = listItem.todos.filter(item => item.is_done).length;
   const totalTasks = listItem.todos.length;
   const dispatch = useDispatch();
 

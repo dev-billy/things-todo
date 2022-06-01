@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default ({listItem}) => {
   const totalTasks = listItem.todos.length;
-  const completedTasks = listItem.todos.filter(todo => todo.completed).length;
+  const completedTasks = listItem.todos.filter(todo => todo.is_done).length;
   return (
     <View style={styles.container}>
       <View>
